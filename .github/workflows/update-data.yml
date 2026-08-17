@@ -2,11 +2,8 @@ name: Update Stock Data
 
 on:
   schedule:
-    # 매일 한국시간 오전 9시
-    - cron: "0 0 * * *"
-
-    # 매일 한국시간 오후 9시
-    - cron: "0 12 * * *"
+    # 매일 정각
+    - cron: "0 * * * *"
 
   workflow_dispatch:
 
