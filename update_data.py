@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 import yfinance as yf
 
 
-symbols = ["QQQM", "TQQQ"]
+symbols = ["QQQM", "TQQQ", "IQQ", "SPYM", "JEPQ"]
 
 data = {
     "updated": datetime.now(timezone.utc).isoformat(),
