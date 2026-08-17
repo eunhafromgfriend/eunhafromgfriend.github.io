@@ -1,289 +1,515 @@
-```html
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Stock Asset</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
+
             background: #f5f6f8;
+
             color: #17191c;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                         Roboto, Arial, sans-serif;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
         }
+
 
         .container {
             max-width: 900px;
+
             margin: 0 auto;
+
             padding: 30px 18px 60px;
         }
 
+
         .header {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             margin-bottom: 25px;
         }
 
+
         h1 {
+
             margin: 0;
+
             font-size: 28px;
         }
 
+
         select {
+
             padding: 10px 14px;
+
             border: 1px solid #ddd;
+
             border-radius: 10px;
+
             background: white;
+
             font-size: 15px;
         }
 
+
         .summary {
+
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
             gap: 14px;
+
             margin-bottom: 25px;
         }
 
+
         .card {
+
             background: white;
+
             border-radius: 16px;
+
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+
+            box-shadow:
+                0 2px 10px
+                rgba(0,0,0,0.05);
         }
 
+
         .label {
+
             color: #777;
+
             font-size: 14px;
+
             margin-bottom: 8px;
         }
 
+
         .value {
+
             font-size: 24px;
+
             font-weight: 700;
         }
 
+
         .sub {
+
             margin-top: 6px;
+
             font-size: 13px;
+
             color: #777;
         }
 
+
         .profit {
+
             color: #e53935;
         }
 
+
         .loss {
+
             color: #1677ff;
         }
 
+
         .section-title {
+
             font-size: 20px;
+
             font-weight: 700;
+
             margin: 25px 0 12px;
         }
 
+
         .stock {
+
             background: white;
+
             border-radius: 16px;
+
             padding: 20px;
+
             margin-bottom: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+
+            box-shadow:
+                0 2px 10px
+                rgba(0,0,0,0.05);
         }
 
+
         .stock-top {
+
             display: flex;
-            justify-content: space-between;
+
+            justify-content:
+                space-between;
+
             align-items: center;
+
             margin-bottom: 16px;
         }
 
+
         .ticker {
+
             font-size: 21px;
+
             font-weight: 800;
         }
 
+
         .price {
+
             font-size: 21px;
+
             font-weight: 700;
         }
 
+
         .stock-grid {
+
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 12px;
         }
 
+
         .stock-item {
+
             background: #f7f7f8;
+
             border-radius: 10px;
+
             padding: 12px;
         }
 
+
         .stock-item .label {
+
             margin-bottom: 5px;
+
             font-size: 12px;
         }
 
+
         .stock-item .number {
+
             font-weight: 600;
+
             font-size: 15px;
         }
 
+
         .exchange {
+
             text-align: right;
+
             color: #777;
+
             font-size: 13px;
+
             margin-top: 15px;
         }
 
+
         .updated {
+
             text-align: center;
+
             color: #888;
+
             font-size: 12px;
+
             margin-top: 20px;
         }
 
-        .loading {
-            text-align: center;
-            padding: 30px;
-            color: #777;
+
+        .status {
+
+            display: inline-block;
+
+            margin-left: 6px;
+
+            color: #22a06b;
+
+            font-weight: 600;
         }
 
+
         @media (max-width: 700px) {
+
             .summary {
+
                 grid-template-columns: 1fr;
             }
 
+
             .stock-grid {
-                grid-template-columns: repeat(2, 1fr);
+
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
+
             .header {
-                align-items: flex-start;
+
+                align-items:
+                    flex-start;
+
                 gap: 12px;
             }
 
+
             h1 {
+
                 font-size: 23px;
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
+
     <div class="header">
-        <h1>📊 Stock Asset</h1>
+
+        <h1>
+            📊 Stock Asset
+        </h1>
 
         <select id="accountSelect">
-            <option value="me">내 계좌</option>
-            <option value="friend1">친구 A</option>
+
+            <option value="me">
+                내 계좌
+            </option>
+
+            <option value="friend1">
+                친구 A
+            </option>
+
         </select>
+
     </div>
+
 
     <div class="summary">
 
-        <div class="card">
-            <div class="label">투자 원금</div>
-            <div class="value" id="totalInvestment">$0</div>
-            <div class="sub" id="totalInvestmentKRW">₩0</div>
-        </div>
 
         <div class="card">
-            <div class="label">현재 평가금액</div>
-            <div class="value" id="totalValue">$0</div>
-            <div class="sub" id="totalValueKRW">₩0</div>
+
+            <div class="label">
+                투자 원금
+            </div>
+
+            <div
+                class="value"
+                id="totalInvestment"
+            >
+                $0
+            </div>
+
+            <div
+                class="sub"
+                id="totalInvestmentKRW"
+            >
+                ₩0
+            </div>
+
         </div>
 
+
         <div class="card">
-            <div class="label">총 수익률</div>
-            <div class="value" id="totalReturn">0%</div>
-            <div class="sub" id="totalProfit">$0</div>
+
+            <div class="label">
+                현재 평가금액
+            </div>
+
+            <div
+                class="value"
+                id="totalValue"
+            >
+                $0
+            </div>
+
+            <div
+                class="sub"
+                id="totalValueKRW"
+            >
+                ₩0
+            </div>
+
         </div>
+
+
+        <div class="card">
+
+            <div class="label">
+                총 수익률
+            </div>
+
+            <div
+                class="value"
+                id="totalReturn"
+            >
+                0%
+            </div>
+
+            <div
+                class="sub"
+                id="totalProfit"
+            >
+                $0
+            </div>
+
+        </div>
+
 
     </div>
 
-    <div class="section-title">보유 주식</div>
+
+    <div class="section-title">
+        보유 주식
+    </div>
+
 
     <div id="stocks">
-        <div class="loading">주가를 불러오는 중...</div>
+
+        데이터를 불러오는 중...
+
     </div>
+
 
     <div class="exchange">
+
         USD/KRW 환율:
-        <strong id="exchangeRate">불러오는 중...</strong>
+
+        <strong id="exchangeRate">
+            -
+        </strong>
+
     </div>
 
-    <div class="updated" id="updated">
+
+    <div
+        class="updated"
+        id="updated"
+    >
         데이터를 불러오는 중...
     </div>
+
 
 </div>
 
 
 <script>
 
+
 /*
 ========================================
-계좌 설정
+계좌 정보
 ========================================
-
-여기에 다른 사람의 계좌를 추가하면 된다.
-
-shares = 보유 주식 수
-buyPrice = 매수가
-
 */
 
 const accounts = {
 
     me: {
+
         name: "내 계좌",
 
         stocks: {
+
             QQQM: {
+
                 shares: 10,
+
                 buyPrice: 200
+
             },
 
             TQQQ: {
+
                 shares: 10,
+
                 buyPrice: 50
+
             }
+
         }
+
     },
 
+
     friend1: {
+
         name: "친구 A",
 
         stocks: {
+
             QQQM: {
+
                 shares: 5,
+
                 buyPrice: 180
+
             },
 
             TQQQ: {
+
                 shares: 10,
+
                 buyPrice: 45
+
             }
+
         }
+
     }
 
 };
-
-
-let exchangeRate = 0;
 
 
 /*
@@ -293,406 +519,521 @@ let exchangeRate = 0;
 */
 
 function moneyUSD(value) {
-    return "$" + value.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
+
+    return "$" +
+        value.toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+
 }
 
 
 function moneyKRW(value) {
-    return "₩" + Math.round(value).toLocaleString("ko-KR");
+
+    return "₩" +
+        Math.round(value)
+            .toLocaleString("ko-KR");
+
 }
 
 
 function percent(value) {
-    return (value >= 0 ? "+" : "") +
-        value.toFixed(2) + "%";
+
+    return (
+        value >= 0
+            ? "+"
+            : ""
+    )
+    +
+    value.toFixed(2)
+    +
+    "%";
+
 }
 
 
 /*
 ========================================
-주가 가져오기
-Yahoo Finance Chart API
+data.json 가져오기
 ========================================
 */
 
-async function getStockPrice(symbol) {
+async function getData() {
 
-    const url =
-        `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?range=1d&interval=1m`;
-
-    try {
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error("주가 요청 실패");
-        }
-
-        const data = await response.json();
-
-        const result = data.chart.result[0];
-
-        const price =
-            result.meta.regularMarketPrice;
-
-        return price;
-
-    } catch (error) {
-
-        console.error(symbol, error);
-
-        return null;
-    }
-}
-
-
-/*
-========================================
-USD/KRW 환율 가져오기
-========================================
-*/
-
-async function getExchangeRate() {
-
-    try {
-
-        const response = await fetch(
-            "https://api.frankfurter.app/latest?from=USD&to=KRW"
+    const response =
+        await fetch(
+            "data.json?t=" +
+            Date.now()
         );
 
-        const data = await response.json();
+    if (!response.ok) {
 
-        return data.rates.KRW;
+        throw new Error(
+            "data.json을 불러올 수 없습니다."
+        );
 
-    } catch (error) {
-
-        console.error("환율 오류:", error);
-
-        return null;
     }
+
+    return await response.json();
+
 }
 
 
 /*
 ========================================
-화면 표시
+페이지 업데이트
 ========================================
 */
 
 async function updatePage() {
 
-    const accountKey =
-        document.getElementById("accountSelect").value;
+    try {
 
-    const account = accounts[accountKey];
-
-    document.getElementById("stocks").innerHTML =
-        `<div class="loading">주가를 불러오는 중...</div>`;
+        const data =
+            await getData();
 
 
-    /*
-    환율
-    */
-
-    const rate = await getExchangeRate();
-
-    if (rate) {
-        exchangeRate = rate;
-
-        document.getElementById("exchangeRate").textContent =
-            `₩${rate.toLocaleString("ko-KR", {
-                maximumFractionDigits: 2
-            })}`;
-    }
+        const accountKey =
+            document
+                .getElementById(
+                    "accountSelect"
+                )
+                .value;
 
 
-    let totalInvestment = 0;
-    let totalValue = 0;
+        const account =
+            accounts[accountKey];
 
 
-    /*
-    주식 정보 가져오기
-    */
-
-    const stockResults = [];
-
-
-    for (const symbol in account.stocks) {
-
-        const stock = account.stocks[symbol];
-
-        const currentPrice =
-            await getStockPrice(symbol);
+        const exchangeRate =
+            data.exchangeRate;
 
 
         /*
-        API 오류가 발생하면
-        매수가를 임시 현재가로 사용하지 않고
-        표시만 오류 처리
+        환율
         */
 
-        stockResults.push({
-            symbol,
-            shares: stock.shares,
-            buyPrice: stock.buyPrice,
-            currentPrice
-        });
+        document
+            .getElementById(
+                "exchangeRate"
+            )
+            .textContent =
+                "₩" +
+                exchangeRate.toLocaleString(
+                    "ko-KR",
+                    {
+                        maximumFractionDigits: 2
+                    }
+                );
 
 
-        totalInvestment +=
-            stock.shares * stock.buyPrice;
+        let totalInvestment = 0;
 
-        if (currentPrice !== null) {
+        let totalValue = 0;
+
+
+        const stocksContainer =
+            document.getElementById(
+                "stocks"
+            );
+
+
+        stocksContainer.innerHTML =
+            "";
+
+
+        /*
+        각각의 주식
+        */
+
+        for (
+            const symbol
+            in account.stocks
+        ) {
+
+
+            const holding =
+                account.stocks[symbol];
+
+
+            const stockData =
+                data.stocks[symbol];
+
+
+            const currentPrice =
+                stockData.price;
+
+
+            const investment =
+                holding.shares *
+                holding.buyPrice;
+
+
+            const value =
+                holding.shares *
+                currentPrice;
+
+
+            const profit =
+                value -
+                investment;
+
+
+            const returnRate =
+                investment === 0
+                    ? 0
+                    :
+                    profit /
+                    investment *
+                    100;
+
+
+            totalInvestment +=
+                investment;
+
 
             totalValue +=
-                stock.shares * currentPrice;
+                value;
 
-        } else {
 
-            totalValue +=
-                stock.shares * stock.buyPrice;
+            /*
+            카드
+            */
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "stock";
+
+
+            card.innerHTML = `
+
+                <div class="stock-top">
+
+                    <div class="ticker">
+                        ${symbol}
+                    </div>
+
+                    <div class="price">
+                        ${moneyUSD(
+                            currentPrice
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="stock-grid">
+
+
+                    <div class="stock-item">
+
+                        <div class="label">
+                            보유수량
+                        </div>
+
+                        <div class="number">
+                            ${holding.shares}주
+                        </div>
+
+                    </div>
+
+
+                    <div class="stock-item">
+
+                        <div class="label">
+                            매수가
+                        </div>
+
+                        <div class="number">
+                            ${moneyUSD(
+                                holding.buyPrice
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="stock-item">
+
+                        <div class="label">
+                            평가금액
+                        </div>
+
+                        <div class="number">
+                            ${moneyUSD(
+                                value
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="stock-item">
+
+                        <div class="label">
+                            수익률
+                        </div>
+
+                        <div class="number ${
+                            returnRate >= 0
+                                ? "profit"
+                                : "loss"
+                        }">
+
+                            ${percent(
+                                returnRate
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="sub ${
+                    profit >= 0
+                        ? "profit"
+                        : "loss"
+                }">
+
+                    손익:
+                    ${profit >= 0
+                        ? "+"
+                        : ""
+                    }
+                    ${moneyUSD(profit)}
+
+                </div>
+
+            `;
+
+
+            stocksContainer
+                .appendChild(card);
 
         }
 
-    }
+
+        /*
+        전체 계산
+        */
+
+        const totalProfit =
+            totalValue -
+            totalInvestment;
 
 
-    /*
-    전체 수익
-    */
-
-    const totalProfit =
-        totalValue - totalInvestment;
-
-    const totalReturn =
-        totalInvestment === 0
-            ? 0
-            : (totalProfit / totalInvestment) * 100;
-
-
-    /*
-    상단 요약
-    */
-
-    document.getElementById("totalInvestment").textContent =
-        moneyUSD(totalInvestment);
-
-    document.getElementById("totalValue").textContent =
-        moneyUSD(totalValue);
-
-    document.getElementById("totalInvestmentKRW").textContent =
-        exchangeRate
-            ? moneyKRW(totalInvestment * exchangeRate)
-            : "₩-";
-
-    document.getElementById("totalValueKRW").textContent =
-        exchangeRate
-            ? moneyKRW(totalValue * exchangeRate)
-            : "₩-";
-
-
-    const totalReturnElement =
-        document.getElementById("totalReturn");
-
-    totalReturnElement.textContent =
-        percent(totalReturn);
-
-    totalReturnElement.className =
-        "value " +
-        (totalReturn >= 0 ? "profit" : "loss");
-
-
-    const totalProfitElement =
-        document.getElementById("totalProfit");
-
-    totalProfitElement.textContent =
-        (totalProfit >= 0 ? "+" : "") +
-        moneyUSD(totalProfit);
-
-    totalProfitElement.className =
-        "sub " +
-        (totalProfit >= 0 ? "profit" : "loss");
-
-
-    /*
-    종목 카드 생성
-    */
-
-    const stocksContainer =
-        document.getElementById("stocks");
-
-    stocksContainer.innerHTML = "";
-
-
-    for (const stock of stockResults) {
-
-        const currentPrice =
-            stock.currentPrice;
-
-        const evaluation =
-            currentPrice !== null
-                ? currentPrice * stock.shares
-                : stock.buyPrice * stock.shares;
-
-        const investment =
-            stock.buyPrice * stock.shares;
-
-        const profit =
-            evaluation - investment;
-
-        const returnRate =
-            investment === 0
+        const totalReturn =
+            totalInvestment === 0
                 ? 0
-                : (profit / investment) * 100;
+                :
+                totalProfit /
+                totalInvestment *
+                100;
 
 
-        const card =
-            document.createElement("div");
+        /*
+        투자 원금
+        */
 
-        card.className = "stock";
-
-
-        card.innerHTML = `
-
-            <div class="stock-top">
-
-                <div class="ticker">
-                    ${stock.symbol}
-                </div>
-
-                <div class="price">
-                    ${
-                        currentPrice !== null
-                            ? moneyUSD(currentPrice)
-                            : "가격 오류"
-                    }
-                </div>
-
-            </div>
+        document
+            .getElementById(
+                "totalInvestment"
+            )
+            .textContent =
+                moneyUSD(
+                    totalInvestment
+                );
 
 
-            <div class="stock-grid">
-
-                <div class="stock-item">
-
-                    <div class="label">
-                        보유수량
-                    </div>
-
-                    <div class="number">
-                        ${stock.shares}주
-                    </div>
-
-                </div>
+        document
+            .getElementById(
+                "totalInvestmentKRW"
+            )
+            .textContent =
+                moneyKRW(
+                    totalInvestment *
+                    exchangeRate
+                );
 
 
-                <div class="stock-item">
+        /*
+        평가금액
+        */
 
-                    <div class="label">
-                        매수가
-                    </div>
-
-                    <div class="number">
-                        ${moneyUSD(stock.buyPrice)}
-                    </div>
-
-                </div>
-
-
-                <div class="stock-item">
-
-                    <div class="label">
-                        평가금액
-                    </div>
-
-                    <div class="number">
-                        ${moneyUSD(evaluation)}
-                    </div>
-
-                </div>
+        document
+            .getElementById(
+                "totalValue"
+            )
+            .textContent =
+                moneyUSD(
+                    totalValue
+                );
 
 
-                <div class="stock-item">
-
-                    <div class="label">
-                        수익률
-                    </div>
-
-                    <div class="number ${
-                        returnRate >= 0
-                            ? "profit"
-                            : "loss"
-                    }">
-
-                        ${percent(returnRate)}
-
-                    </div>
-
-                </div>
-
-            </div>
+        document
+            .getElementById(
+                "totalValueKRW"
+            )
+            .textContent =
+                moneyKRW(
+                    totalValue *
+                    exchangeRate
+                );
 
 
-            <div class="sub ${
-                profit >= 0
+        /*
+        총 수익률
+        */
+
+        const returnElement =
+            document
+                .getElementById(
+                    "totalReturn"
+                );
+
+
+        returnElement.textContent =
+            percent(
+                totalReturn
+            );
+
+
+        returnElement.className =
+            "value " +
+            (
+                totalReturn >= 0
                     ? "profit"
                     : "loss"
-            }">
-
-                손익:
-                ${profit >= 0 ? "+" : ""}
-                ${moneyUSD(profit)}
-
-            </div>
-
-        `;
+            );
 
 
-        stocksContainer.appendChild(card);
+        /*
+        총 손익
+        */
+
+        const profitElement =
+            document
+                .getElementById(
+                    "totalProfit"
+                );
+
+
+        profitElement.textContent =
+            (
+                totalProfit >= 0
+                    ? "+"
+                    : ""
+            )
+            +
+            moneyUSD(
+                totalProfit
+            );
+
+
+        profitElement.className =
+            "sub " +
+            (
+                totalProfit >= 0
+                    ? "profit"
+                    : "loss"
+            );
+
+
+        /*
+        업데이트 시간
+        */
+
+        const date =
+            new Date(
+                data.updated
+            );
+
+
+        document
+            .getElementById(
+                "updated"
+            )
+            .innerHTML =
+
+            "데이터 업데이트: "
+            +
+            date.toLocaleString(
+                "ko-KR"
+            )
+
+            +
+
+            '<span class="status">'
+            +
+            "●"
+            +
+            "</span>";
 
     }
 
+    catch (error) {
 
-    document.getElementById("updated").textContent =
-        "마지막 업데이트: " +
-        new Date().toLocaleTimeString("ko-KR");
+        console.error(error);
+
+        document
+            .getElementById(
+                "stocks"
+            )
+            .innerHTML =
+
+            `
+            <div class="stock">
+
+                데이터를 불러오지 못했습니다.
+
+                <br><br>
+
+                ${error.message}
+
+            </div>
+            `;
+
+    }
 
 }
 
 
 /*
-========================================
 계좌 변경
-========================================
 */
 
 document
-    .getElementById("accountSelect")
-    .addEventListener("change", updatePage);
+    .getElementById(
+        "accountSelect"
+    )
+    .addEventListener(
+        "change",
+        updatePage
+    );
 
 
 /*
-========================================
-처음 실행
-========================================
+페이지 최초 실행
 */
 
 updatePage();
 
 
-/*
-========================================
-1분마다 갱신
-========================================
-*/
-
-setInterval(updatePage, 60000);
-
 </script>
 
+
 </body>
+
 </html>
-```
