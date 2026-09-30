@@ -1,21 +1,21 @@
 {
-  "updated": "2026-09-30T15:39:11.535699+00:00",
-  "exchangeRate": 1355.38,
+  "updated": "2026-09-30T20:33:46.583243+00:00",
+  "exchangeRate": 1356.13,
   "stocks": {
     "QQQM": {
-      "price": 306.3815
+      "price": 304.64
     },
     "TQQQ": {
-      "price": 79.36
+      "price": 78.03
     },
     "IQQ": {
-      "price": 25.1699
+      "price": 25.03
     },
     "SPYM": {
-      "price": 90.4776
+      "price": 89.76
     },
     "JEPQ": {
-      "price": 61.405
+      "price": 61.26
     }
   }
 }
