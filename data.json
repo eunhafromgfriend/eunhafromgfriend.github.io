@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-06T00:45:54.134637+00:00",
-  "exchangeRate": 1356.08,
+  "updated": "2026-11-06T07:40:48.835934+00:00",
+  "exchangeRate": 1355.61,
   "stocks": {
     "QQQM": {
       "price": 266.85
     },
     "TQQQ": {
-      "price": 50.465
+      "price": 50.47
     },
     "IQQ": {
       "price": 21.94
